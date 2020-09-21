@@ -5,7 +5,7 @@ Python project template.
 ## Usage
 
 ```bash
-python example.py source dest
+python3 example.py source dest
 ```
 
 ## Requirements
@@ -25,7 +25,7 @@ vim conf/local.yml
 # source .venv/bin/activate
 
 # install requirements
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 mkdir local
 ```
