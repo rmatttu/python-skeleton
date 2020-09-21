@@ -129,6 +129,17 @@ def main():
     exampleList = ExampleList(tests)
     exampleList.output_file()
 
+    # ファイル読み込み
+    lines = []
+    with open('local/input.txt', 'r+', encoding='utf-8') as reader:
+        lines = reader.readlines()
+    for index, item in enumerate(lines):
+        line = item.replace('\r', '').replace('\n', '')
+        lineNo = index + 1
+        if not line:
+            logger.warning('\t'.join(['emptyLine', str(lineNo)]))
+            continue
+        logger.debug('\t'.join(['data', str(lineNo), line]))
 
 if __name__ == '__main__':
     main()

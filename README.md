@@ -30,6 +30,19 @@ pip3 install -r requirements.txt
 mkdir local
 ```
 
+here documents.
+
+```bash
+cat << EOS > local/input.txt
+hello
+
+hoge
+fuga
+piyo
+
+EOS
+```
+
 ## License
 
 ## Author
