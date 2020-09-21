@@ -3,8 +3,13 @@
 import argparse
 import yaml
 import logging.config
-from datetime import datetime, timedelta, timezone
+import datetime
+import json
 import os
+
+import log_tool
+
+__version__ = '1.0.0'
 
 class ExampleClass(object):
     def __init__(self, value=100):
@@ -48,9 +53,8 @@ class ExampleList(object):
             f.write('\n\n ok.')
 
     def generate_now_string(self):
-        JST = timezone(timedelta(hours=+9), 'JST')
-        return datetime.now(JST).strftime('%Y_%m_%d__%H_%M_%S')
-
+        JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
+        return datetime.datetime.now(JST).strftime('%Y_%m_%d__%H_%M_%S')
 
 def main():
     parser = argparse.ArgumentParser()
@@ -61,12 +65,18 @@ def main():
     parser.add_argument('--sw1', action='store_true', help='switch 1, オプションを付けるとsw2はtrue (false)')
     parser.add_argument('--sw2', action='store_false', help='switch 2, オプションを付けるとsw2はfalse (true)')
     parser.add_argument('-i','--inputs', action='append', help='何度も使用できるオプション、例: "-i this -i is -i test"')
+    parser.add_argument('-v', '--version', action='version', version=__version__, help='Show version and exit')
     args = parser.parse_args()
-    logging.config.fileConfig('log.ini')
-    logger = logging.getLogger()
     conf = yaml.safe_load(open('conf/local.yml', 'r+', encoding='utf-8'))
 
+    JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
+    startDatetime = datetime.datetime.now(JST)
+    os.makedirs('logs', exist_ok=True)
+    logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
+
     # ログ出力
+    logger.debug('Starting {}.{} (v{})'.format(__file__, __name__, __version__))
+    logger.debug('args: ' + json.dumps(vars(args)))
     logger.log(20, 'info')
     logger.log(30, 'warning')
     logger.log(100, 'test')
