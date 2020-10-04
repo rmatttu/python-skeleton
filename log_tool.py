@@ -10,7 +10,7 @@ def setup_logger(logFileName: Optional[str]=None, modname=__name__):
         JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
         startDatetime = datetime.datetime.now(JST)
         os.makedirs(logDir, exist_ok=True)
-        filename = os.path.join(logDir, startDatetime.strftime('%Y-%m-%d_%H-%M-%S') + '.log')
+        filename = os.path.join(logDir, startDatetime.strftime('%Y-%m-%d_%H-%M-%S.%f') + '.log')
 
     logger = logging.getLogger(modname)
     logger.setLevel(logging.DEBUG)
@@ -22,7 +22,7 @@ def setup_logger(logFileName: Optional[str]=None, modname=__name__):
     sh.setFormatter(formatter)
     logger.addHandler(sh)
 
-    fh = logging.FileHandler(filename)
+    fh = logging.FileHandler(filename, encoding='utf-8')
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
