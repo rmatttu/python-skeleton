@@ -139,3 +139,4 @@ pip-selfcheck.json
 # Other
 conf/*
 !conf/default.yml
+logs/*

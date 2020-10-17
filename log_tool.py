@@ -7,8 +7,8 @@ def setup_logger(logFileName: Optional[str]=None, modname=__name__):
     filename = logFileName
     if not filename:
         logDir = 'logs'
-        JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
-        startDatetime = datetime.datetime.now(JST)
+        localTimeZone = datetime.datetime.now().astimezone().tzinfo
+        startDatetime = datetime.datetime.now(localTimeZone)
         os.makedirs(logDir, exist_ok=True)
         filename = os.path.join(logDir, startDatetime.strftime('%Y-%m-%d_%H-%M-%S.%f') + '.log')
 

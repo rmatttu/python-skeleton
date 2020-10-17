@@ -9,7 +9,7 @@ import os
 
 import log_tool
 
-__version__ = '1.0.0'
+__version__ = '1.2.0'
 
 class ExampleClass(object):
     def __init__(self, value=100):
@@ -69,8 +69,8 @@ def main():
     args = parser.parse_args()
     conf = yaml.safe_load(open('conf/local.yml', 'r+', encoding='utf-8'))
 
-    JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
-    startDatetime = datetime.datetime.now(JST)
+    localTimeZone = datetime.datetime.now().astimezone().tzinfo
+    startDatetime = datetime.datetime.now(localTimeZone)
     os.makedirs('logs', exist_ok=True)
     logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
 
@@ -140,6 +140,9 @@ def main():
             logger.warning('\t'.join(['emptyLine', str(lineNo)]))
             continue
         logger.debug('\t'.join(['data', str(lineNo), line]))
+
+    processingTime = datetime.datetime.now(localTimeZone) - startDatetime
+    logger.debug('\t'.join(['processingTime', str(processingTime.total_seconds()), str(processingTime)]))
 
 if __name__ == '__main__':
     main()
