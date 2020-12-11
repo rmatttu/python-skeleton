@@ -73,10 +73,10 @@ def main():
     startDatetime = datetime.datetime.now(localTimeZone)
     os.makedirs('logs', exist_ok=True)
     logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
+    logger.debug('\t'.join(['Starting',str(__file__), str(__name__), str(__version__)]))
+    logger.debug('\t'.join(['args', json.dumps(vars(args), ensure_ascii=False)]))
 
     # ログ出力
-    logger.debug('Starting {}.{} (v{})'.format(__file__, __name__, __version__))
-    logger.debug('args: ' + json.dumps(vars(args)))
     logger.log(20, 'info')
     logger.log(30, 'warning')
     logger.log(100, 'test')
@@ -141,8 +141,9 @@ def main():
             continue
         logger.debug('\t'.join(['data', str(lineNo), line]))
 
+    # 終了
     processingTime = datetime.datetime.now(localTimeZone) - startDatetime
-    logger.debug('\t'.join(['processingTime', str(processingTime.total_seconds()), str(processingTime)]))
+    logger.debug('\t'.join(['processingTime', str(processingTime.total_seconds()) + 's', str(processingTime)]))
 
 if __name__ == '__main__':
     main()
