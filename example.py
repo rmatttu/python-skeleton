@@ -1,11 +1,9 @@
-# vim: fileencoding=utf-8
-
 import argparse
-import yaml
-import logging.config
 import datetime
 import json
 import os
+
+import yaml
 
 import log_tool
 
