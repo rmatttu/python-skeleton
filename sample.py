@@ -1,13 +1,26 @@
 import argparse
+import dataclasses
 import datetime
 import json
 import os
+from typing import Optional
 
 import yaml
 
 import log_tool
 
 __version__ = '1.2.0'
+
+@dataclasses.dataclass
+class Args(object):
+    src: str
+    dst: str
+    foo: str
+    optional_num: int
+    sw1: bool
+    sw2: bool
+    inputs: list
+    version: str
 
 class ExampleClass(object):
     def __init__(self, value=100):
@@ -66,7 +79,7 @@ def main():
     parser.add_argument('--sw2', action='store_false', help='switch 2, オプションを付けるとsw2はfalse (true)')
     parser.add_argument('-i','--inputs', action='append', help='何度も使用できるオプション、例: "-i this -i is -i test"')
     parser.add_argument('-v', '--version', action='version', version=__version__, help='Show version and exit')
-    args = parser.parse_args()
+    args = parser.parse_args() # type: Args
     conf = yaml.safe_load(open('conf/local.yml', 'r+', encoding='utf-8'))
 
     localTimeZone = datetime.datetime.now().astimezone().tzinfo
