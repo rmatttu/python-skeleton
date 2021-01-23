@@ -5,7 +5,7 @@ Python project template.
 ## Usage
 
 ```bash
-python3 example.py source dest
+python3 sample.py source dest
 ```
 
 ## Requirements
