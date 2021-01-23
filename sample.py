@@ -55,7 +55,9 @@ class ExampleList(object):
         return datetime.datetime.now(JST).strftime('%Y_%m_%d__%H_%M_%S')
 
 def main():
-    parser = argparse.ArgumentParser()
+    """ Sample code
+    """
+    parser = argparse.ArgumentParser(description=main.__doc__)
     parser.add_argument('src', default='src_dir', help='source directory (src_dir)')
     parser.add_argument('dst', default='dst_dir', help='destination directory (dst_dir)')
     parser.add_argument('--foo', default='test', help='optional string foo (test)')
