@@ -58,9 +58,9 @@ def main():
     """ Sample code
     """
     parser = argparse.ArgumentParser(description=main.__doc__)
-    parser.add_argument('src', default='src_dir', help='source directory (src_dir)')
-    parser.add_argument('dst', default='dst_dir', help='destination directory (dst_dir)')
-    parser.add_argument('--foo', default='test', help='optional string foo (test)')
+    parser.add_argument('src', default='src_dir', type=str, help='source directory (src_dir)')
+    parser.add_argument('dst', default='dst_dir', type=str, help='destination directory (dst_dir)')
+    parser.add_argument('--foo', default='test', type=str, help='optional string foo (test)')
     parser.add_argument('--optional-num', default=5, type=int, help='intのみを受け付けるオプション (5)')
     parser.add_argument('--sw1', action='store_true', help='switch 1, オプションを付けるとsw2はtrue (false)')
     parser.add_argument('--sw2', action='store_false', help='switch 2, オプションを付けるとsw2はfalse (true)')
