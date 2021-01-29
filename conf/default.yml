@@ -1,5 +1,5 @@
 settings:
   nihongo: 日本語テスト
-  bool-test: True
+  bool_test: True
   int_test: 123
 
