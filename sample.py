@@ -20,7 +20,6 @@ class Args(object):
     sw1: bool
     sw2: bool
     inputs: list
-    version: str
 
 class ExampleClass(object):
     def __init__(self, value=100):
