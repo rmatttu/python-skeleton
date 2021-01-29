@@ -5,6 +5,10 @@ import os
 import yaml
 
 @dataclasses.dataclass
+class Log:
+    output_file: bool
+
+@dataclasses.dataclass
 class Settings:
     nihongo: str
     bool_test: bool
@@ -12,6 +16,7 @@ class Settings:
 
 @dataclasses.dataclass
 class Conf:
+    log: Log
     settings: Settings
 
 @dataclasses.dataclass
@@ -22,6 +27,7 @@ class Loader:
     def load(self):
         confDict = {}
         source = yaml.safe_load(open(str(self.path), 'r+', encoding=self.encoding))
+        confDict['log'] = Settings(**source['log'])
         confDict['settings'] = Settings(**source['settings'])
         return Conf(**confDict)
 

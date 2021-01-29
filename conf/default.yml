@@ -1,5 +1,6 @@
+log:
+  output_file: False
 settings:
   nihongo: 日本語テスト
   bool_test: True
   int_test: 123
-

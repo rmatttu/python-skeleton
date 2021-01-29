@@ -1,6 +1,7 @@
 import argparse
 import datetime
 import json
+import logging
 import os
 
 import yaml
@@ -72,6 +73,16 @@ def main():
 
     localTimeZone = datetime.datetime.now().astimezone().tzinfo
     startDatetime = datetime.datetime.now(localTimeZone)
+
+    logger: logging.Logger = None
+    if conf.log.output_file:
+        os.makedirs('logs', exist_ok=True)
+        logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
+        # launchly log
+        # logger = log_tool.setup_logger(log_tool.get_log_file_name())
+    else:
+        logger = log_tool.setup_logger()
+
     os.makedirs('logs', exist_ok=True)
     logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
     logger.debug('\t'.join(['Starting',str(__file__), str(__name__), str(__version__)]))
