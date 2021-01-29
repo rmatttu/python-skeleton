@@ -68,7 +68,7 @@ def main():
     parser.add_argument('-i','--inputs', action='append', help='何度も使用できるオプション、例: "-i this -i is -i test"')
     parser.add_argument('-v', '--version', action='version', version=__version__, help='Show version and exit')
     args = parser.parse_args() # type: system_loader.SampleArgs
-    conf = yaml.safe_load(open('conf/local.yml', 'r+', encoding='utf-8'))
+    conf = system_loader.Loader().load()
 
     localTimeZone = datetime.datetime.now().astimezone().tzinfo
     startDatetime = datetime.datetime.now(localTimeZone)
@@ -89,13 +89,14 @@ def main():
     logger.info('info')
     logger.warning('warning')
     logger.debug(args)
-    logger.info(conf['settings']['nihongo'])
+    logger.info(conf.settings.nihongo)
 
     # 設定ファイル
-    if conf['settings']['bool-test'] == True:
-        logger.info(conf['settings']['nihongo'])
-        logger.info(str(conf['settings']['int_test']))
-        logger.info(str(conf['settings']['int_test']).zfill(4))
+    if conf.settings.bool_test == True:
+        logger.info(conf.settings.nihongo)
+        logger.info(str(conf.settings.int_test))
+        logger.info(str(conf.settings.int_test))
+        logger.info(str(conf.settings.int_test).zfill(4))
 
     # 継承
     b = ExampleClassB()

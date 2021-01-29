@@ -11,6 +11,10 @@ class Settings:
     int_test: int
 
 @dataclasses.dataclass
+class Conf:
+    settings: Settings
+
+@dataclasses.dataclass
 class Loader:
     path: pathlib.Path = dataclasses.field(default=pathlib.Path(os.path.join('conf', 'local.yml')))
     encoding: str = dataclasses.field(default='utf-8')
@@ -18,9 +22,8 @@ class Loader:
     def load(self):
         confDict = {}
         source = yaml.safe_load(open(str(self.path), 'r+', encoding=self.encoding))
-        return Settings(**{
-            'settings': Settings(**source['settings'])
-        })
+        confDict['settings'] = Settings(**source['settings'])
+        return Conf(**confDict)
 
 @dataclasses.dataclass
 class SampleArgs(object):
