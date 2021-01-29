@@ -88,6 +88,11 @@ def main():
     logger.debug('\t'.join(['Starting',str(__file__), str(__name__), str(__version__)]))
     logger.debug('\t'.join(['args', json.dumps(vars(args), ensure_ascii=False)]))
 
+    def close(code: int):
+        processingTime = datetime.datetime.now(localTimeZone) - startDatetime
+        logger.debug('\t'.join(['processingTime', str(processingTime.total_seconds()) + 's', str(processingTime)]))
+        exit(code)
+
     # ログ出力
     logger.log(20, 'info')
     logger.log(30, 'warning')
@@ -154,8 +159,7 @@ def main():
         logger.debug('\t'.join(['data', str(lineNo), line]))
 
     # 終了
-    processingTime = datetime.datetime.now(localTimeZone) - startDatetime
-    logger.debug('\t'.join(['processingTime', str(processingTime.total_seconds()) + 's', str(processingTime)]))
+    close(0)
 
 if __name__ == '__main__':
     main()
