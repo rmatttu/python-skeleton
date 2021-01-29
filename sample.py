@@ -83,8 +83,6 @@ def main():
     else:
         logger = log_tool.setup_logger()
 
-    os.makedirs('logs', exist_ok=True)
-    logger = log_tool.setup_logger(os.path.join('logs', 'log.log'))
     logger.debug('\t'.join(['Starting',str(__file__), str(__name__), str(__version__)]))
     logger.debug('\t'.join(['args', json.dumps(vars(args), ensure_ascii=False)]))
 

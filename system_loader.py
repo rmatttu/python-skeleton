@@ -27,7 +27,7 @@ class Loader:
     def load(self):
         confDict = {}
         source = yaml.safe_load(open(str(self.path), 'r+', encoding=self.encoding))
-        confDict['log'] = Settings(**source['log'])
+        confDict['log'] = Log(**source['log'])
         confDict['settings'] = Settings(**source['settings'])
         return Conf(**confDict)
 
