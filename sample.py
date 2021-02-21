@@ -9,7 +9,7 @@ import yaml
 import log_tool
 import system_loader
 
-__version__ = '1.2.0'
+__version__ = '1.3.0'
 
 class ExampleClass(object):
     def __init__(self, value=100):
