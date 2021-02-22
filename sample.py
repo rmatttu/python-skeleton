@@ -1,8 +1,12 @@
 import argparse
+import dataclasses
 import datetime
+import glob
 import json
 import logging
 import os
+import pathlib
+import typing
 
 import yaml
 
@@ -55,6 +59,14 @@ class ExampleList(object):
     def generate_now_string(self):
         JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
         return datetime.datetime.now(JST).strftime('%Y_%m_%d__%H_%M_%S')
+
+@dataclasses.dataclass
+class FileStat:
+    path: pathlib.Path
+    stat: os.stat_result = dataclasses.field(init=False)
+
+    def __post_init__(self):
+        self.stat = os.stat(self.path)
 
 def main():
     """ Sample code
@@ -156,6 +168,30 @@ def main():
             logger.warning('\t'.join(['emptyLine', str(lineNo)]))
             continue
         logger.debug('\t'.join(['data', str(lineNo), line]))
+
+    # ファイルリスト取得・更新日時ソート
+    targetDir = pathlib.Path('./')
+    search = '*.py'
+    files = glob.glob(str(targetDir.joinpath(search)))
+    fileStats = [FileStat(pathlib.Path(i)) for i in files]
+    logger.debug('\n'.join([str(i) for i in fileStats]))
+
+    print('')
+    print('---Default order---')
+    print('\n'.join([str(i.path) for i in fileStats]))
+
+    # 破壊的（updatedAtの順序が変更される）
+    updatedAt = list(fileStats)
+    updatedAt.sort(key=lambda i: i.stat.st_mtime)
+    print('')
+    print('---Order by updated at---')
+    print('\n'.join([str(i.path) for i in updatedAt]))
+
+    # 非破壊的（元にしたリストの順序は変更されない）
+    createdAt = sorted(fileStats, key=lambda i: i.stat.st_ctime)
+    print('')
+    print('---Order by created at---')
+    print('\n'.join([str(i.path) for i in createdAt]))
 
     # 終了
     close(0)
