@@ -23,9 +23,6 @@ class ExampleClass(object):
     def power(self):
         return self.value * self.value
 
-    def __repr__(self):
-        return
-
     def __str__(self):
         return "value: {}".format(self.value)
 
