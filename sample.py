@@ -52,7 +52,7 @@ class ExampleList(object):
         lines = []
         lines.append(", ".join(["a", "b", "c"]))
         lines.append(", ".join([str(i.value) for i in self._examples]))
-        with open(fullname, mode="w") as f:
+        with open(fullname, mode="w", encoding="utf-8") as f:
             f.writelines("\n".join(lines))
             f.write("\n\n ok.")
 
@@ -164,28 +164,28 @@ def main():
         ExampleClassB(value=3),
     ]
     values = ExampleClass.lambda_test(exampleObjs)
-    logger.debug("Print values: " + str(values))
+    logger.debug(f"Print values: {str(values)}")
 
     # リスト内記法、map、filter
     numbers1 = [i for i in range(10)]
     numbersStr = [str(i) for i in range(10)]
-    logger.debug("numbers1:        " + str(numbers1))
-    logger.debug("numbersStr:      " + str(numbersStr))
+    logger.debug(f"numbers1:        {str(numbers1)}")
+    logger.debug(f"numbersStr:      {str(numbersStr)}")
 
     tests = [ExampleClass(i) for i in range(10)]
     testsPow = [str(i.power()) for i in tests]
-    logger.debug("testsPow:        " + ", ".join(testsPow))
+    logger.debug(f"testsPow:        {', '.join(testsPow)}")
 
     testsList = [str(i) for i in tests]
     testsMap = map(lambda i: str(i.value), tests)
     testsFilter = list(filter(lambda i: i.value % 2 == 0, tests))
-    logger.debug("testsList:       " + ", ".join(testsList))
-    logger.debug("testsMap:        " + ", ".join(testsMap))
+    logger.debug(f"testsList:       {', '.join(testsList)}")
+    logger.debug(f"testsMap:        {', '.join(testsMap)}")
 
     testsFilterStr = map(lambda i: str(i.value), testsFilter)
     testsFilterList = [str(i) for i in tests if i.value % 2 == 0]
-    logger.debug("testsFilterStr:  " + ", ".join(testsFilterStr))
-    logger.debug("testsFilterList: " + ", ".join(testsFilterList))
+    logger.debug(f"testsFilterStr:  {', '.join(testsFilterStr)}")
+    logger.debug(f"testsFilterList: {', '.join(testsFilterList)}")
 
     # ファイル書き込み
     exampleList = ExampleList(tests)
