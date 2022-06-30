@@ -11,7 +11,8 @@ import typing
 
 from selenium import webdriver
 from selenium.webdriver.remote import webelement
-import chromedriver_binary  # Adds chromedriver binary to path
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common import desired_capabilities
 
 import log_tool
 import system_loader
@@ -50,12 +51,16 @@ def main():
     logger.debug("\t".join(["args", json.dumps(vars(args), ensure_ascii=False)]))
 
     options = webdriver.ChromeOptions()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-infobars")
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-infobars")
     # options.add_argument('--kiosk') # Full screen
     # options.add_argument('--user-data-dir=' + './test/') # Save browser data
+    caps = desired_capabilities.DesiredCapabilities.CHROME.copy()
+    caps["goog:loggingPrefs"] = {"performance": "ALL"}  # enable performance logs
     driver = webdriver.Chrome(
-        chromedriver_binary.chromedriver_filename, chrome_options=options
+        ChromeDriverManager().install(),
+        chrome_options=options,
+        desired_capabilities=caps,
     )
 
     def wait():
