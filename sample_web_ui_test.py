@@ -33,8 +33,8 @@ def main():
     args = parser.parse_args()  # type: system_loader.SampleArgs
     conf = system_loader.Loader().load()
 
-    localTimeZone = datetime.datetime.now().astimezone().tzinfo
-    startDatetime = datetime.datetime.now(localTimeZone)
+    local_time_zone = datetime.datetime.now().astimezone().tzinfo
+    start_datetime = datetime.datetime.now(local_time_zone)
 
     logger: logging.Logger = None
     if conf.log.output_file:
@@ -67,13 +67,13 @@ def main():
         time.sleep(3)
 
     def close(code: int):
-        processingTime = datetime.datetime.now(localTimeZone) - startDatetime
+        processing_time = datetime.datetime.now(local_time_zone) - start_datetime
         logger.debug(
             "\t".join(
                 [
                     "processingTime",
-                    str(processingTime.total_seconds()) + "s",
-                    str(processingTime),
+                    str(processing_time.total_seconds()) + "s",
+                    str(processing_time),
                 ]
             )
         )
@@ -87,16 +87,16 @@ def main():
         el: webelement.WebElement = driver.find_element_by_class_name("MV3Tnb")
         text = el.text
         logger.debug(text)
-    except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
+    except Exception as ex:
+        _, _, exc_tb = sys.exc_info()
         # fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         logger.error(
             "\t".join(
                 [
-                    str(type(e)),
+                    str(type(ex)),
                     exc_tb.tb_frame.f_code.co_filename,
                     f"line {str(exc_tb.tb_lineno)}",
-                    str(e),
+                    str(ex),
                 ]
             )
         )
