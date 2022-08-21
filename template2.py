@@ -1,3 +1,5 @@
+"""template2"""
+
 import argparse
 import dataclasses
 import datetime
@@ -16,6 +18,7 @@ __version__ = "0.0.0"
 
 @dataclasses.dataclass
 class SimpleArgs(object):
+    """Args"""
     src: str
     dst: str
     foo: str
@@ -26,6 +29,7 @@ class SimpleArgs(object):
 
 
 def simple_setup_logger(logFileName: typing.Optional[str] = None, modname=__name__):
+    """Setup simple logger"""
     logger = logging.getLogger(modname)
     logger.setLevel(logging.DEBUG)
     datefmt = "%Y-%m-%d %H:%M:%S"
@@ -83,8 +87,8 @@ def main():
     )
     args = parser.parse_args()  # type: system_loader.SampleArgs
 
-    localTimeZone = datetime.datetime.now().astimezone().tzinfo
-    startDatetime = datetime.datetime.now(localTimeZone)
+    local_timezone = datetime.datetime.now().astimezone().tzinfo
+    start_datetime = datetime.datetime.now(local_timezone)
 
     logger: logging.Logger = None
     logger = simple_setup_logger()
@@ -100,16 +104,16 @@ def main():
 
     mypath = pathlib.Path("this/is/test/path")
     mypath = mypath.joinpath(str(mypath), "sub-dir")
-    print(str(mypath), File=sys.stderr)
+    print(str(mypath), file=sys.stderr)
 
     def close(code: int):
-        processingTime = datetime.datetime.now(localTimeZone) - startDatetime
+        processing_time = datetime.datetime.now(local_timezone) - start_datetime
         logger.debug(
             "\t".join(
                 [
                     "processingTime",
-                    str(processingTime.total_seconds()) + "s",
-                    str(processingTime),
+                    str(processing_time.total_seconds()) + "s",
+                    str(processing_time),
                 ]
             )
         )

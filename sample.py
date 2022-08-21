@@ -1,3 +1,5 @@
+"""sample"""
+
 import argparse
 import dataclasses
 import datetime
@@ -27,8 +29,8 @@ class ExampleClass(object):
         return "value: {}".format(self.value)
 
     @staticmethod
-    def lambda_test(exampleObjs):
-        values = list(map(lambda x: x.value, exampleObjs))
+    def lambda_test(example_objs):
+        values = list(map(lambda x: x.value, example_objs))
         return values
 
 
@@ -107,8 +109,8 @@ def main():
     args = parser.parse_args()  # type: system_loader.SampleArgs
     conf = system_loader.Loader().load()
 
-    localTimeZone = datetime.datetime.now().astimezone().tzinfo
-    startDatetime = datetime.datetime.now(localTimeZone)
+    local_timezone = datetime.datetime.now().astimezone().tzinfo
+    start_datetime = datetime.datetime.now(local_timezone)
 
     logger: logging.Logger = None
     if conf.log.output_file:
@@ -125,13 +127,13 @@ def main():
     logger.debug("\t".join(["args", json.dumps(vars(args), ensure_ascii=False)]))
 
     def close(code: int):
-        processingTime = datetime.datetime.now(localTimeZone) - startDatetime
+        processing_time = datetime.datetime.now(local_timezone) - start_datetime
         logger.debug(
             "\t".join(
                 [
                     "processingTime",
-                    str(processingTime.total_seconds()) + "s",
-                    str(processingTime),
+                    str(processing_time.total_seconds()) + "s",
+                    str(processing_time),
                 ]
             )
         )
@@ -147,7 +149,7 @@ def main():
     logger.info(conf.settings.nihongo)
 
     # 設定ファイル
-    if conf.settings.bool_test == True:
+    if conf.settings.bool_test is True:
         logger.info(conf.settings.nihongo)
         logger.info(str(conf.settings.int_test))
         logger.info(str(conf.settings.int_test))
@@ -158,12 +160,12 @@ def main():
     logger.debug("Print ExampleClassB.")
     logger.debug(b)
 
-    exampleObjs = [
+    example_objs = [
         ExampleClassB(value=1),
         ExampleClassB(value=2),
         ExampleClassB(value=3),
     ]
-    values = ExampleClass.lambda_test(exampleObjs)
+    values = ExampleClass.lambda_test(example_objs)
     logger.debug(f"Print values: {str(values)}")
 
     # リスト内記法、map、filter
@@ -207,22 +209,22 @@ def main():
     targetDir = pathlib.Path("./")
     search = "*.py"
     files = glob.glob(str(targetDir.joinpath(search)))
-    fileStats = [FileStat(pathlib.Path(i)) for i in files]
-    logger.debug("\n".join([str(i) for i in fileStats]))
+    file_stats = [FileStat(pathlib.Path(i)) for i in files]
+    logger.debug("\n".join([str(i) for i in file_stats]))
 
     print("")
     print("---Default order---")
-    print("\n".join([str(i.path) for i in fileStats]))
+    print("\n".join([str(i.path) for i in file_stats]))
 
     # 破壊的（updatedAtの順序が変更される）
-    updatedAt = list(fileStats)
+    updatedAt = list(file_stats)
     updatedAt.sort(key=lambda i: i.stat.st_mtime)
     print("")
     print("---Order by updated at---")
     print("\n".join([str(i.path) for i in updatedAt]))
 
     # 非破壊的（元にしたリストの順序は変更されない）
-    createdAt = sorted(fileStats, key=lambda i: i.stat.st_ctime)
+    createdAt = sorted(file_stats, key=lambda i: i.stat.st_ctime)
     print("")
     print("---Order by created at---")
     print("\n".join([str(i.path) for i in createdAt]))

@@ -33,8 +33,8 @@ def main():
     args = parser.parse_args()  # type: system_loader.SampleArgs
     conf = system_loader.Loader().load()
 
-    local_time_zone = datetime.datetime.now().astimezone().tzinfo
-    start_datetime = datetime.datetime.now(local_time_zone)
+    local_timezone = datetime.datetime.now().astimezone().tzinfo
+    start_datetime = datetime.datetime.now(local_timezone)
 
     logger: logging.Logger = None
     if conf.log.output_file:
@@ -67,7 +67,7 @@ def main():
         time.sleep(3)
 
     def close(code: int):
-        processing_time = datetime.datetime.now(local_time_zone) - start_datetime
+        processing_time = datetime.datetime.now(local_timezone) - start_datetime
         logger.debug(
             "\t".join(
                 [
