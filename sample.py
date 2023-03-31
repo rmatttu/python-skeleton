@@ -106,7 +106,7 @@ def main():
         version=__version__,
         help="Show version and exit",
     )
-    args = parser.parse_args()  # type: system_loader.SampleArgs
+    args = parser.parse_args()  # type: system_loader.SimpleArgs
     conf = system_loader.Loader().load()
 
     local_timezone = datetime.datetime.now().astimezone().tzinfo

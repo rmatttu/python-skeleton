@@ -39,7 +39,7 @@ class Loader:
 
 
 @dataclasses.dataclass
-class SampleArgs(object):
+class SimpleArgs(object):
     src: str
     dst: str
     foo: str
