@@ -52,6 +52,7 @@ def main():
     logger.debug("\t".join(["args", json.dumps(vars(args), ensure_ascii=False)]))
 
     options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
     # options.add_argument("--no-sandbox")
     # options.add_argument("--disable-infobars")
     # options.add_argument('--kiosk') # Full screen
