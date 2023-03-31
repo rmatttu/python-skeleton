@@ -15,14 +15,45 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common import desired_capabilities
 from selenium.webdriver.common.by import By
 
-import log_tool
-import system_loader
-
 __version__ = "0.0.1"
+
+@dataclasses.dataclass
+class SimpleArgs(object):
+    """Args"""
+    src: str
+    dst: str
+    foo: str
+    optional_num: int
+    sw1: bool
+    sw2: bool
+    inputs: list
+
+
+def simple_setup_logger(log_filename: typing.Optional[str] = None, modname=__name__):
+    """Setup simple logger"""
+    logger = logging.getLogger(modname)
+    logger.setLevel(logging.DEBUG)
+    datefmt = "%Y-%m-%d %H:%M:%S"
+    formatter = logging.Formatter(
+        "%(asctime)s.%(msecs)03d\t%(levelname)s\t%(message)s", datefmt
+    )
+
+    sh = logging.StreamHandler()
+    sh.setLevel(logging.DEBUG)
+    sh.setFormatter(formatter)
+    logger.addHandler(sh)
+
+    if log_filename:
+        fh = logging.FileHandler(log_filename, encoding="utf-8")
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+
+    return logger
 
 
 def main():
-    """sample_web_test"""
+    """main"""
     parser = argparse.ArgumentParser(description=main.__doc__)
     parser.add_argument(
         "-v",
@@ -31,20 +62,13 @@ def main():
         version=__version__,
         help="Show version and exit",
     )
-    args = parser.parse_args()  # type: system_loader.SampleArgs
-    conf = system_loader.Loader().load()
+    args = parser.parse_args()  # type: SimpleArgs
 
     local_timezone = datetime.datetime.now().astimezone().tzinfo
     start_datetime = datetime.datetime.now(local_timezone)
 
     logger: logging.Logger = None
-    if conf.log.output_file:
-        os.makedirs("logs", exist_ok=True)
-        logger = log_tool.setup_logger(os.path.join("logs", "log.log"))
-        # launchly log
-        # logger = log_tool.setup_logger(log_tool.get_log_file_name())
-    else:
-        logger = log_tool.setup_logger()
+    logger = simple_setup_logger(None)
 
     logger.debug(
         "\t".join(["Starting", str(__file__), str(__name__), str(__version__)])
