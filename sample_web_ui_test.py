@@ -13,6 +13,7 @@ from selenium import webdriver
 from selenium.webdriver.remote import webelement
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common import desired_capabilities
+from selenium.webdriver.common.by import By
 
 import log_tool
 import system_loader
@@ -81,10 +82,10 @@ def main():
 
     try:
         driver.get("https://www.google.com/")
-        el: webelement.WebElement = driver.find_element_by_class_name("gLFyf")
+        el: webelement.WebElement = driver.find_element(By.CLASS_NAME, "gLFyf")
         el.send_keys("search word")
         wait()
-        el: webelement.WebElement = driver.find_element_by_class_name("MV3Tnb")
+        el: webelement.WebElement = driver.find_element(By.CLASS_NAME, "MV3Tnb")
         text = el.text
         logger.debug(text)
     except Exception as ex:
