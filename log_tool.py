@@ -1,9 +1,9 @@
 """log_tool"""
 
-from typing import Optional
 import datetime
 import logging
 import os
+from typing import Optional
 
 
 def get_log_file_name():

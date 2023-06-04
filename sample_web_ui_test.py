@@ -10,16 +10,18 @@ import time
 import typing
 
 from selenium import webdriver
-from selenium.webdriver.remote import webelement
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common import desired_capabilities
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote import webelement
+from webdriver_manager.chrome import ChromeDriverManager
 
 __version__ = "0.0.1"
+
 
 @dataclasses.dataclass
 class SimpleArgs(object):
     """Args"""
+
     src: str
     dst: str
     foo: str
@@ -76,7 +78,7 @@ def main():
     logger.debug("\t".join(["args", json.dumps(vars(args), ensure_ascii=False)]))
 
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    options.add_argument("--headless")
     # options.add_argument("--no-sandbox")
     # options.add_argument("--disable-infobars")
     # options.add_argument('--kiosk') # Full screen

@@ -19,6 +19,7 @@ __version__ = "0.0.0"
 @dataclasses.dataclass
 class SimpleArgs(object):
     """Args"""
+
     src: str
     dst: str
     foo: str
